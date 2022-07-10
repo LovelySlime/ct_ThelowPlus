@@ -15,7 +15,7 @@ register("step", () => {
 
 register("renderOverlay", () => {
   if (title === -1) return
-  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.7.2? &7by &bSuratin&d ]"
+  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.7.3 &7by &bSuratin&d ]"
   Renderer.drawString(displayedText, 10, 15)
 })
 
@@ -294,7 +294,6 @@ register("renderOverlay", () => {
 
 // Tokoyami Number Detection
 
-
 let lastTitle = ""
 let currentTitle = ""
 let numSum = 0
@@ -302,76 +301,141 @@ let numAns = 0
 let countTitleChanged = 0
 let goChat = 0
 
-// <ここにタイトル代入を記入>
+let titleNums = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII"];
 
 register("step", () => {
+  
+  currentTitle = RenderTitle();
+  ChatLib.chat(currentTitle)
 
-  if (currentTitle == "I" && lastTitle != "I") {
-    numSum = numSum + 1
-    countTitleChanged++
-  }
-  if (currentTitle == "II" && lastTitle != "II") {
-    numSum = numSum + 2
-    countTitleChanged++
-  }
-  if (currentTitle == "III" && lastTitle != "III") {
-   numSum = numSum + 3
-    countTitleChanged++
-  }
-  if (currentTitle == "IV" && lastTitle != "IV") {
-    numSum = numSum + 4
-    countTitleChanged++
-  }
-  if (currentTitle == "V" && lastTitle != "V") {
-    numSum = numSum + 5
-    countTitleChanged++
-  }
-  if (currentTitle == "VI" && lastTitle != "VI") {
-    numSum = numSum + 6
-    countTitleChanged++
-  }
-  if (currentTitle == "VII" && lastTitle != "VII") {
-    numSum = numSum + 7
-    countTitleChanged++
-  }
-  if (currentTitle == "VIII" && lastTitle != "VIII") {
-    numSum = numSum + 8
-    countTitleChanged++
-  }
-  if (currentTitle == "IX" && lastTitle != "IX") {
-    numSum = numSum + 9
-    countTitleChanged++
-  }
-  if (currentTitle == "X" && lastTitle != "X") {
-    numSum = numSum + 10
-    countTitleChanged++
-  }
-  if (currentTitle == "XI" && lastTitle != "XI") {
-    numSum = numSum + 11
-    countTitleChanged++
-  }
-  if (currentTitle == "XII" && lastTitle != "XII") {
-    numSum = numSum + 12
-    countTitleChanged++
-  }
+  nums.forEach((titleNums, i) => {
+    if (titleNums == currentTitle) {
+        numSum += i + 1;
+        countTitleChanged++    
+        ChatLib.chat(numSum)
+    }
+  });
 
-  if (countTitleChanged == 13) {
-    goChat = 66
+  if (countTitleChanged == 11) {
+    //goChat = 66
     countTitleChanged = 0
     numAns = 78 - numSum
   }
-
-  if (goChat > 0) {
-    goChat--
-  }
-
+  ChatLib.chat(nums[numAns - 1])
   lastTitle = currentTitle
-}).setDelay(0.2)
+})
 
-register("renderOverlay", () => {
+/* register("renderOverlay", () => {
   if (goChat <= 0) return
   if (goChat > 0) {
   displayedText = "&b&l[闇] Ans : <" + numAns + "> "
   Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+45)
   }
+}) */
+
+// 純白1tpTimer
+
+let white1TpTimer = -1
+
+register("chat", () => { white1TpTimer = 60 }).setCriteria("${*}人1人追いつめてくよ${*}")
+
+
+register("step", () => {
+  if (white1TpTimer > -1) {
+    white1TpTimer--
+	World.playSound("mob.blaze.hit", 175, 1);
+  }
+}).setDelay(1)
+
+register("renderOverlay", () => {
+  if (white1TpTimer === -1) return
+  displayedText = "&8[白] 1TP : " + white1TpTimer + "s"
+  Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+20)
 })
+
+// 純白ctTimerP1
+// リィ・恵みの泉・アイススタンプ
+
+let whiteCtTimerP1 = -1
+
+register("chat", () => { whiteCtTimerP1 = 60 }).setCriteria("${*}リィ・恵みの泉・アイススタンプ${*}")
+
+
+register("step", () => {
+  if (whiteCtTimerP1 > -1) {
+    whiteCtTimerP1--
+	World.playSound("mob.blaze.hit", 175, 1);
+  }
+}).setDelay(1)
+
+register("renderOverlay", () => {
+  if (whiteCtTimerP1 === -1) return
+  displayedText = "&8[白] パ/泉/アイス/才ct : &6" + whiteCtTimerP1 + "&8s"
+  Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+30)
+})
+
+// 純白ctTimerP2
+// ーバーシュート・ステッドショック
+
+let whiteCtTimerP2 = -1
+
+register("chat", () => { whiteCtTimerP2 = 60 }).setCriteria("${*}ーバーシュート・ステッドショック${*}")
+
+
+register("step", () => {
+  if (whiteCtTimerP2 > -1) {
+    whiteCtTimerP2--
+	World.playSound("mob.blaze.hit", 175, 1);
+  }
+}).setDelay(1)
+
+register("renderOverlay", () => {
+  if (whiteCtTimerP2 === -1) return
+  displayedText = "&8[白] 旗Ult ct : &6" + whiteCtTimerP2 + "&8s"
+  Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+40)
+})
+
+// 純白ctTimerP3
+// 醒・天下無双・
+
+let whiteCtTimerP3 = -1
+
+register("chat", () => { whiteCtTimerP3 = 60 }).setCriteria("${*}醒・天下無双・${*}")
+
+
+register("step", () => {
+  if (whiteCtTimerP3 > -1) {
+    whiteCtTimerP3--
+	World.playSound("mob.blaze.hit", 175, 1);
+  }
+}).setDelay(1)
+
+register("renderOverlay", () => {
+  if (whiteCtTimerP3 === -1) return
+  displayedText = "&8[白] 覚醒/天下/斬撃/激昂/百花ct : &6" + whiteCtTimerP3 + "&8s"
+  Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+50)
+})
+
+// 純白ctTimerP4
+// 醒・天下無双・
+
+let whiteCtTimerP4 = -1
+
+register("chat", () => { whiteCtTimerP4 = 60 }).setCriteria("${*}テオストライク・ファイアボル${*}")
+
+
+register("step", () => {
+  if (whiteCtTimerP4 > -1) {
+    whiteCtTimerP4--
+	World.playSound("mob.blaze.hit", 175, 1);
+  }
+}).setDelay(1)
+
+register("renderOverlay", () => {
+  if (whiteCtTimerP4 === -1) return
+  displayedText = "&8[白] メテ/ボル/ブリ/グラct : &6" + whiteCtTimerP4 + "&8s"
+  Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+60)
+})
+
+//autoax3
+//register("chat", () => { ChatLib.say("gg") }).setCriteria("${*}ドロップしました${*}")
