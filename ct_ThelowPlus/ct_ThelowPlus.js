@@ -15,7 +15,7 @@ register("step", () => {
 
 register("renderOverlay", () => {
   if (title === -1) return
-  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.7.3 &7by &bSuratin&d ]"
+  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.8.0 &7by &bSuratin&d ]"
   Renderer.drawString(displayedText, 10, 15)
 })
 
@@ -98,7 +98,7 @@ register("step", () => {
 
 register("renderOverlay", () => {
   if (sakaiHeadGrassTimer === -1) return
-  displayedText = "&5&l⚡ [砂]Purple Thunder : " + sakaiHeadGrassTimer + " ⚡"
+  displayedText = "&a&l⚡ [砂]Purple Thunder : " + sakaiHeadGrassTimer + " ⚡"
   Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+25)
 })
 
@@ -119,7 +119,7 @@ register("step", () => {
 
 register("renderOverlay", () => {
   if (sakaiSkillBlock === -1) return
-  displayedText = "&5&lX [砂]no Parii : " + sakaiSkillBlock + " X"
+  displayedText = "&b&lX [砂]no Parii : " + sakaiSkillBlock + " X"
   Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+50)
 })
 
@@ -127,6 +127,7 @@ register("renderOverlay", () => {
 //常闇N 2v2タイマー
 
 let yami2v2NTimer = -1
+let warn2v2Failing = 0
 
 register("chat", () => { yami2v2NTimer = 65 }).setCriteria("${*}九の刻${*}")
 
@@ -139,13 +140,23 @@ register("step", () => {
 	}else{
 		World.playSound("random.anvil_land", 300, 1);
 	}
+	if (yami2v2NTimer == 10) {
+		warn2v2Failing = 1
+	}
+	
   }
 }).setDelay(1)
 
 register("renderOverlay", () => {
   if (yami2v2NTimer === -1) return
+  
   displayedText = "&d&l⚔ [闇]2v2 :" + yami2v2NTimer + " (T:-5s) ⚔"
   Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+25)
+	
+  if (warn2v2Failing == 1) {
+	  warn2v2Failing = 0
+	  ChatLib.say("常闇 2v2デバフ注意 残り約10秒 (Tの場合5秒)")
+  }
 })
 
 register("chat", () => { yami2v2NTimer = -1 }).setCriteria("${*}地下からの脱出に成功した${*}")
@@ -337,7 +348,7 @@ register("step", () => {
 
 let white1TpTimer = -1
 
-register("chat", () => { white1TpTimer = 60 }).setCriteria("${*}人1人追いつめてくよ${*}")
+register("chat", () => { white1TpTimer = 63 }).setCriteria("${*}人1人追いつめてくよ${*}")
 
 
 register("step", () => {
@@ -438,4 +449,22 @@ register("renderOverlay", () => {
 })
 
 //autoax3
-//register("chat", () => { ChatLib.say("gg") }).setCriteria("${*}ドロップしました${*}")
+register("chat", () => { ChatLib.say("[TL+] Start 4th floor Puzzle!") }).setCriteria("${*}あ～～～...${*}")
+
+//autoNoticeSpiderSpawn
+register("chat", () => { ChatLib.say("[TL+] Spdier Boss Spawned!") }).setCriteria("${*}のモンスターが存在する間${*}")
+
+//流星が襲い掛かる...同じ場所に固まるのは
+//ryuuseipariiwarn
+register("chat", () => { 
+if (sakaiSkillBlock > 0){
+	sayText = "[TL+] Warning : パリィ封印残り" + sakaiSkillBlock + "秒"
+	ChatLib.say(sayText)
+}
+	}).setCriteria("${*}流星が襲い掛かる...同じ場所に固まるのは${*}")
+/*
+TriggerRegister.registerCommand(glistShowall).setName("gls");
+function glistShowall {
+	ChatLib.command("glist showall");
+}
+*/
