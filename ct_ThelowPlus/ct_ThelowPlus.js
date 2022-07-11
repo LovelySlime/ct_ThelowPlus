@@ -19,14 +19,30 @@ register("renderOverlay", () => {
   Renderer.drawString(displayedText, 10, 15)
 })
 
+var toggleBskTimer = new Boolean();
+var toggleAwaTimer = new Boolean();
+var toggleSakaiNdTimer = new Boolean();
+var toggleSakaiHeadGlassTimer = new Boolean();
+var toggleSakaiSkillBlock = new Boolean();
+var toggleYami2v2NTimer = new Boolean();
+var toggleAutoGg = new Boolean();
+var toggleXenTimer = new Boolean();
+var toggleHuuinGimicTimer = new Boolean();
+var toggleTokoyamiNumberDetection = new Boolean();
+var toggleWhite1TpTimer = new Boolean();
+var toggleWhiteCtTimer = new Boolean();
 
+TriggerRegister.registerCommand("openSettingsGUI").setComandName("/suraneko");
 
+function openSettingsGUI(commandData){
+  configBskTimer.open(commandData);
+}
 
 // バーサークタイマー
-
 let bskTimer = -1
 
 register("chat", () => { bskTimer = 5 }).setCriteria("[武器スキル] ${*}がバーサークを発動")
+
 
 
 register("step", () => {
@@ -84,21 +100,21 @@ register("renderOverlay", () => {
 
 //砂海頭上ガラスタイマー
 
-let sakaiHeadGrassTimer = -1
+let sakaiHeadGlassTimer = -1
 
-register("chat", () => { sakaiHeadGrassTimer = 35 }).setCriteria("${*}リィは使えない。全力で逃げろ！${*}")
+register("chat", () => { sakaiHeadGlassTimer = 35 }).setCriteria("${*}リィは使えない。全力で逃げろ！${*}")
 
 
 register("step", () => {
-  if (sakaiHeadGrassTimer > -1) {
-    sakaiHeadGrassTimer--
+  if (sakaiHeadGlassTimer > -1) {
+    sakaiHeadGlassTimer--
 	World.playSound("mob.wither.shoot", 250, 1.7);
   }
 }).setDelay(1)
 
 register("renderOverlay", () => {
-  if (sakaiHeadGrassTimer === -1) return
-  displayedText = "&a&l⚡ [砂]Purple Thunder : " + sakaiHeadGrassTimer + " ⚡"
+  if (sakaiHeadGlassTimer === -1) return
+  displayedText = "&a&l⚡ [砂]Purple Thunder : " + sakaiHeadGlassTimer + " ⚡"
   Renderer.drawString(displayedText, Renderer.screen.getWidth()/2 - Renderer.getStringWidth(displayedText)/2, Renderer.screen.getHeight()/2+25)
 })
 
@@ -162,7 +178,7 @@ register("renderOverlay", () => {
 register("chat", () => { yami2v2NTimer = -1 }).setCriteria("${*}地下からの脱出に成功した${*}")
 
 //autogg when
-//register("chat", () => { ChatLib.say("gg") }).setCriteria("${*}ドロップしました${*}")
+register("chat", () => { ChatLib.say("gg") }).setCriteria("${*}ドロップしました${*}")
 
 
 //Xen Timer
