@@ -15,7 +15,7 @@ register("step", () => {
 
 register("renderOverlay", () => {
   if (title === -1) return
-  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.8.0 &7by &bSuratin&d ]"
+  displayedText = "&n&l&d[ &cThe&6low&e+ &av&20.9.0 &7by &bSura/yuuki Nekos&d ]"
   Renderer.drawString(displayedText, 10, 15)
 })
 
